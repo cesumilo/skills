@@ -24,6 +24,21 @@ This repository contains a collection of agent skills for AI coding assistants. 
 
 **When to use:** Use whenever implementing new features, fixing bugs, or modifying behavior in code to ensure test coverage and maintainable code.
 
+### 5. **Code Quality (code-quality)**
+**Description:** Proactively guides and enforces code quality practices: eliminating magic numbers and strings, constructor-based dependency injection, and thorough documentation. Flags violations as they are noticed, plans safe incremental refactors.
+
+**When to use:** Use for maintaining high code quality standards, refactoring legacy code, or establishing best practices in new projects.
+
+### 6. **File Writing (file-writing)**
+**Description:** Governs how the agent writes files. Enforces chunked, sequential writes to prevent silent truncation from buffer/context limits.
+
+**When to use:** Use for all file writing operations to ensure reliable, safe file creation and modification.
+
+### 7. **Problem Solving (problem-solving)**
+**Description:** Governs the agent's internal reasoning process and communication style. Enforces hypothesis-driven, test-first, iterate-fast problem solving. Eliminates silent internal loops, premature abstraction, and invisible approach changes.
+
+**When to use:** Use for any non-trivial problem solving to ensure transparent, efficient reasoning and communication.
+
 ## How to Use Skills with Vercel Labs Skills CLI
 
 ### Installation
@@ -110,6 +125,29 @@ The TDD skill automatically enforces:
 - 🟢 **GREEN**: Minimal implementation to pass
 - 🔵 **REFACTOR**: Clean up while keeping tests green
 
+### Using Code Quality Skill
+The code-quality skill continuously:
+- 🔍 Scans for magic numbers and strings
+- 🏗️ Enforces constructor-based dependency injection
+- 📝 Ensures thorough documentation
+- 📋 Plans safe, incremental refactoring
+- ⚠️ Flags violations as they're discovered
+
+### Using File Writing Skill
+The file-writing skill ensures:
+- 📏 No more than 50 lines per write operation
+- 🔁 Sequential chunked writes from beginning to end
+- ✅ Verification after each chunk
+- 📋 Clear communication about what was written and what remains
+
+### Using Problem Solving Skill
+The problem-solving skill enforces:
+- 🧠 One hypothesis at a time approach
+- ⚡ Maximum 2 internal iterations before asking for help
+- 📐 Decision format with risk assessment and test verification
+- ❓ Explicit questions when torn between approaches
+- 🔄 Transparent approach changes instead of silent restarts
+
 ## Skill Integration
 
 These skills are designed to work together:
@@ -117,7 +155,10 @@ These skills are designed to work together:
 1. **DDD + TDD**: Domain layer tests are pure unit tests, application layer tests mock repositories
 2. **DDD + Long-Term Memory**: Records bounded contexts, architectural decisions, and discoveries
 3. **Pair Mode + TDD**: Agent writes tests, user implements to make them pass
-4. **All skills**: Comprehensive workflow covering architecture, testing, memory, and collaboration
+4. **Code Quality + All skills**: Enforces quality standards across all workflows
+5. **File Writing + All skills**: Ensures safe, reliable file operations across all workflows
+6. **Problem Solving + All skills**: Provides transparent reasoning and efficient decision-making
+7. **All skills**: Comprehensive workflow covering architecture, testing, quality, reasoning, memory, and collaboration
 
 ## Managing Installed Skills
 
@@ -174,6 +215,9 @@ Skills in this repository:
 - `long-term-memory/` - Project memory management
 - `pair-mode/` - Pair programming workflow
 - `tdd-workflow/` - Test-Driven Development
+- `code-quality/` - Code quality and refactoring guidance
+- `file-writing/` - Safe file writing and chunking
+- `problem-solving/` - Transparent reasoning and decision-making
 
 Each skill directory contains a `SKILL.md` file with the complete skill definition.
 
