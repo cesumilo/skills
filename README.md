@@ -39,6 +39,11 @@ This repository contains a collection of agent skills for AI coding assistants. 
 
 **When to use:** Use for any non-trivial problem solving to ensure transparent, efficient reasoning and communication.
 
+### 8. **Design Interview (design-interview)**
+**Description:** Runs structured design interviews to reach shared understanding of plans, features, or systems. Walks design trees branch by branch, resolving decision dependencies, sharpening fuzzy language, and stress-testing with concrete scenarios. Inspired by [Matt Pocock's grill-with-docs skill](https://github.com/mattpocock/skills/blob/main/skills/engineering/grill-with-docs/SKILL.md).
+
+**When to use:** Use when designing new features, reviewing plans, or needing to clarify complex requirements before implementation.
+
 ## How to Use Skills with Vercel Labs Skills CLI
 
 ### Installation
@@ -148,6 +153,14 @@ The problem-solving skill enforces:
 - ❓ Explicit questions when torn between approaches
 - 🔄 Transparent approach changes instead of silent restarts
 
+### Using Design Interview Skill
+The design-interview skill provides:
+- 🔍 One question at a time with recommended answers
+- 🌳 Design tree walking to resolve decision dependencies
+- 📝 Sharpening fuzzy language into canonical terms
+- 🧪 Stress-testing with concrete scenarios
+- 📋 ADR creation only for hard-to-reverse, surprising, trade-off decisions
+
 ## Skill Integration
 
 These skills are designed to work together:
@@ -158,7 +171,8 @@ These skills are designed to work together:
 4. **Code Quality + All skills**: Enforces quality standards across all workflows
 5. **File Writing + All skills**: Ensures safe, reliable file operations across all workflows
 6. **Problem Solving + All skills**: Provides transparent reasoning and efficient decision-making
-7. **All skills**: Comprehensive workflow covering architecture, testing, quality, reasoning, memory, and collaboration
+7. **Design Interview + TDD**: Interview decisions become acceptance criteria for failing tests
+8. **All skills**: Comprehensive workflow covering architecture, testing, quality, reasoning, memory, design, and collaboration
 
 ## Managing Installed Skills
 
@@ -218,6 +232,7 @@ Skills in this repository:
 - `code-quality/` - Code quality and refactoring guidance
 - `file-writing/` - Safe file writing and chunking
 - `problem-solving/` - Transparent reasoning and decision-making
+- `design-interview/` - Structured design interview process
 
 Each skill directory contains a `SKILL.md` file with the complete skill definition.
 
