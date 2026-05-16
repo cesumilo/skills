@@ -51,16 +51,6 @@ This repository contains a collection of agent skills for AI coding assistants. 
 
 ## How to Use Skills with Vercel Labs Skills CLI
 
-### Installation
-
-First, install the Vercel Labs skills CLI globally:
-
-```bash
-npm install -g @vercel-labs/skills
-# or
-npx @vercel-labs/skills
-```
-
 ### Installing Skills from this Repository
 
 #### Option 1: Install from GitHub directly
