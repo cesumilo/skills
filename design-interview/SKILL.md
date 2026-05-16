@@ -120,6 +120,12 @@ When the interview concludes and implementation begins, hand off directly
 to `tdd-workflow`. Decisions made during the interview become the
 acceptance criteria for the first failing tests.
 
+### `premortem-this`
+After the interview produces a clear, agreed plan, run `premortem-this` to
+stress-test it. The interview sharpens the plan; the premortem finds the
+hidden assumptions, weak decisions, and missing risks before resources are
+committed.
+
 ### `long-term-memory`
 After the session, key decisions — especially ADRs and canonical term
 definitions — should be written to the project memory file per the

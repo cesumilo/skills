@@ -44,6 +44,11 @@ This repository contains a collection of agent skills for AI coding assistants. 
 
 **When to use:** Use when designing new features, reviewing plans, or needing to clarify complex requirements before implementation.
 
+### 9. **Premortem (premortem-this)**
+**Description:** Stress-tests any plan, project, or decision by imagining it has already failed and working backward to discover why. Surfaces hidden assumptions, weak decisions, and missing risks before resources are committed. Inspired by Gary Klein's premortem technique.
+
+**When to use:** Use before launching a product, starting a complex project, making a major architectural decision, or after a design-interview session to stress-test the clarified plan.
+
 ## How to Use Skills with Vercel Labs Skills CLI
 
 ### Installation
@@ -172,7 +177,10 @@ These skills are designed to work together:
 5. **File Writing + All skills**: Ensures safe, reliable file operations across all workflows
 6. **Problem Solving + All skills**: Provides transparent reasoning and efficient decision-making
 7. **Design Interview + TDD**: Interview decisions become acceptance criteria for failing tests
-8. **All skills**: Comprehensive workflow covering architecture, testing, quality, reasoning, memory, design, and collaboration
+8. **Design Interview + Premortem**: Design-interview clarifies the plan, then premortem stress-tests it
+9. **Premortem + Long-Term Memory**: Record premortem findings as architectural decisions in MEMORY.md
+10. **Premortem + DDD**: Stress-test bounded context boundaries and aggregate designs before implementation
+11. **All skills**: Comprehensive workflow covering architecture, testing, quality, reasoning, memory, design, and collaboration
 
 ## Managing Installed Skills
 
@@ -233,6 +241,7 @@ Skills in this repository:
 - `file-writing/` - Safe file writing and chunking
 - `problem-solving/` - Transparent reasoning and decision-making
 - `design-interview/` - Structured design interview process
+- `premortem-this/` - Premortem stress-testing of plans and decisions
 
 Each skill directory contains a `SKILL.md` file with the complete skill definition.
 
