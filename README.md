@@ -49,6 +49,11 @@ This repository contains a collection of agent skills for AI coding assistants. 
 
 **When to use:** Use before launching a product, starting a complex project, making a major architectural decision, or after a design-interview session to stress-test the clarified plan.
 
+### 10. **Session-to-Spec (session-to-spec)**
+**Description:** Distills the current session into a structured specification document (SPEC.md). Captures design decisions, canonical terms, edge cases, known weak points, open questions, and ADRs. Works with design-interview sessions, premortem findings, and standalone conversations.
+
+**When to use:** Use after a design-interview or premortem-this session, or whenever you want to capture a design discussion as a durable, reviewable spec before implementation begins.
+
 ## How to Use Skills with Vercel Labs Skills CLI
 
 ### Installing Skills from this Repository
@@ -156,6 +161,28 @@ The design-interview skill provides:
 - 🧪 Stress-testing with concrete scenarios
 - 📋 ADR creation only for hard-to-reverse, surprising, trade-off decisions
 
+### Using Session-to-Spec Skill
+Activate with:
+```
+spec this
+```
+
+The skill will:
+- 📐 Compose a structured `SPEC.md` from the session's design decisions
+- 📝 Capture canonical terms, edge cases, weak points, open questions, and ADRs
+- 🔄 Intelligently update an existing `SPEC.md` when iterating on the same feature
+- 📋 Prompt you to review carefully after writing
+- 🧠 Add a journal entry to `MEMORY.md` via `long-term-memory`
+
+Works after:
+```
+design-interview → premortem-this → session-to-spec
+```
+Or standalone:
+```
+specify this
+```
+
 ## Skill Integration
 
 These skills are designed to work together:
@@ -170,7 +197,11 @@ These skills are designed to work together:
 8. **Design Interview + Premortem**: Design-interview clarifies the plan, then premortem stress-tests it
 9. **Premortem + Long-Term Memory**: Record premortem findings as architectural decisions in MEMORY.md
 10. **Premortem + DDD**: Stress-test bounded context boundaries and aggregate designs before implementation
-11. **All skills**: Comprehensive workflow covering architecture, testing, quality, reasoning, memory, design, and collaboration
+11. **Design Interview + Session-to-Spec**: Design-interview clarifies decisions, then session-to-spec distills them into SPEC.md
+12. **Premortem + Session-to-Spec**: Premortem findings populate the Known Weak Points & Remediations section of the spec
+13. **Session-to-Spec + Long-Term Memory**: Spec creation is recorded as a journal entry in MEMORY.md for cross-session discovery
+14. **Session-to-Spec + TDD**: Spec decisions become acceptance criteria for the first failing tests
+15. **All skills**: Comprehensive workflow covering architecture, testing, quality, reasoning, memory, design, specification, and collaboration
 
 ## Managing Installed Skills
 
@@ -232,6 +263,7 @@ Skills in this repository:
 - `problem-solving/` - Transparent reasoning and decision-making
 - `design-interview/` - Structured design interview process
 - `premortem-this/` - Premortem stress-testing of plans and decisions
+- `session-to-spec/` - Session-to-specification distillation
 
 Each skill directory contains a `SKILL.md` file with the complete skill definition.
 
