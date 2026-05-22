@@ -4,52 +4,57 @@ This repository contains a collection of agent skills for AI coding assistants. 
 
 ## Available Skills
 
-### 1. **Domain-Driven Design (ddd)**
+### 1. **Learn (learn)**
+**Description:** Socratic learning guide for programming and software engineering topics. Uses a 3-step ladder (explore → concepts → different example) to guide you toward the answer without giving it directly. Supports official docs, pedagogical sources, and domain-distance anti-example rules.
+
+**When to use:** Use with explicit triggers like "help me learn X", "explain Y", or "I'm trying to understand Z".
+
+### 2. **Domain-Driven Design (ddd)**
 **Description:** Guides Domain-Driven Design architecture across four layers (domain, application, infrastructure, presentation) organized by bounded context. Enforces dependency rules, tactical patterns, ubiquitous language, and aggregate rules. Supports greenfield and incremental legacy migration.
 
 **When to use:** Use when building complex business applications with rich domain logic, migrating legacy systems, or establishing clean architecture patterns.
 
-### 2. **Long-Term Memory (long-term-memory)**
+### 3. **Long-Term Memory (long-term-memory)**
 **Description:** Maintains a persistent project journal in MEMORY.md across sessions. Records state, architectural decisions, discoveries, task history, and open questions; reconciles with the project's planning documents; archives old entries automatically.
 
 **When to use:** Use for any project to maintain continuity across sessions, track architectural decisions, and preserve project knowledge.
 
-### 3. **Pair Programming Mode (pair-mode)**
+### 4. **Pair Programming Mode (pair-mode)**
 **Description:** Pair programming navigator mode. Toggles a state where the agent scaffolds structure and writes failing tests, but refuses to implement business logic — the user writes it.
 
 **When to use:** Use when you want to actively participate in implementation while the agent provides guidance, scaffolding, and review.
 
-### 4. **TDD Workflow (tdd-workflow)**
+### 5. **TDD Workflow (tdd-workflow)**
 **Description:** Enforces strict Test-Driven Development (Red-Green-Refactor) workflow for any language or framework.
 
 **When to use:** Use whenever implementing new features, fixing bugs, or modifying behavior in code to ensure test coverage and maintainable code.
 
-### 5. **Code Quality (code-quality)**
+### 6. **Code Quality (code-quality)**
 **Description:** Proactively guides and enforces code quality practices: eliminating magic numbers and strings, constructor-based dependency injection, and thorough documentation. Flags violations as they are noticed, plans safe incremental refactors.
 
 **When to use:** Use for maintaining high code quality standards, refactoring legacy code, or establishing best practices in new projects.
 
-### 6. **File Writing (file-writing)**
+### 7. **File Writing (file-writing)**
 **Description:** Governs how the agent writes files. Enforces chunked, sequential writes to prevent silent truncation from buffer/context limits.
 
 **When to use:** Use for all file writing operations to ensure reliable, safe file creation and modification.
 
-### 7. **Problem Solving (problem-solving)**
+### 8. **Problem Solving (problem-solving)**
 **Description:** Governs the agent's internal reasoning process and communication style. Enforces hypothesis-driven, test-first, iterate-fast problem solving. Eliminates silent internal loops, premature abstraction, and invisible approach changes.
 
 **When to use:** Use for any non-trivial problem solving to ensure transparent, efficient reasoning and communication.
 
-### 8. **Design Interview (design-interview)**
+### 9. **Design Interview (design-interview)**
 **Description:** Runs structured design interviews to reach shared understanding of plans, features, or systems. Walks design trees branch by branch, resolving decision dependencies, sharpening fuzzy language, and stress-testing with concrete scenarios. Inspired by [Matt Pocock's grill-with-docs skill](https://github.com/mattpocock/skills/blob/main/skills/engineering/grill-with-docs/SKILL.md).
 
 **When to use:** Use when designing new features, reviewing plans, or needing to clarify complex requirements before implementation.
 
-### 9. **Premortem (premortem-this)**
+### 10. **Premortem (premortem-this)**
 **Description:** Stress-tests any plan, project, or decision by imagining it has already failed and working backward to discover why. Surfaces hidden assumptions, weak decisions, and missing risks before resources are committed. Inspired by Gary Klein's premortem technique.
 
 **When to use:** Use before launching a product, starting a complex project, making a major architectural decision, or after a design-interview session to stress-test the clarified plan.
 
-### 10. **Session-to-Spec (session-to-spec)**
+### 11. **Session-to-Spec (session-to-spec)**
 **Description:** Distills the current session into a structured specification document (SPEC.md). Captures design decisions, canonical terms, edge cases, known weak points, open questions, and ADRs. Works with design-interview sessions, premortem findings, and standalone conversations.
 
 **When to use:** Use after a design-interview or premortem-this session, or whenever you want to capture a design discussion as a durable, reviewable spec before implementation begins.
@@ -254,6 +259,7 @@ Describe scenarios where this skill should be activated.
 ## Contributing
 
 Skills in this repository:
+- `learn/` - Socratic learning guide
 - `ddd/` - Domain-Driven Design architecture
 - `long-term-memory/` - Project memory management
 - `pair-mode/` - Pair programming workflow
