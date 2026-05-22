@@ -62,7 +62,45 @@ Use open-ended, blame-safe questions. Draw out:
 **Most Dangerous Failure Point**
 - Which cause would have the most severe consequences, even if it's less likely?
 
-### 4. Synthesise and Report
+### 4. Root Cause Analysis
+For every failure point surfaced in discovery, trace from symptom to root cause. Use the Five Whys technique: starting from "why did this happen?", drill deeper until you reach a systemic or structural cause. Avoid stopping at surface-level answers or blaming individuals. For each finding, record:
+
+```
+## Finding: [Symptom]
+
+**Why Chain**
+1. Why? → [immediate cause]
+2. Why? → [deeper cause]
+3. Why? → [even deeper cause]
+4. Why? → [systemic factor]
+5. Why? → [root cause — a structural gap in process, incentives, knowledge, tooling, or organisational design]
+
+**Root Cause (summary)**: [One sentence that captures the deepest systemic factor]
+```
+
+If you hit a root cause earlier than 5 whys, stop — no need to force it. If more than 5 whys are needed, continue.
+
+### 5. Generate Recommendations
+For every root cause, produce one or more concrete, ranked recommendations. Each recommendation must:
+- Describe **what** action to take
+- Specify **when** it should be done (before launch, during sprint planning, continuously, etc.)
+- Name **who** is responsible (role, not person; e.g. "tech lead", "product owner", "ops")
+- State the **expected outcome** (what changes if this is done)
+- Be **ranked** by impact (1 = highest impact / most urgent)
+
+Root causes without a corresponding recommendation are a red flag — every root cause deserves at least one mitigation.
+
+```
+### Recommendation 1 (Impact: ⭐⭐⭐)
+
+**What**: [Concrete action]
+**When**: [Timing]
+**Who**: [Role responsible]
+**Expected outcome**: [What this prevents or enables]
+**Traces to**: [Root cause(s) this addresses]
+```
+
+### 6. Synthesise and Report
 Deliver a structured summary:
 
 ```
@@ -89,13 +127,37 @@ Deliver a structured summary:
 ### Most Dangerous Failure Point
 [Most severe consequence cause, even if lower probability]
 
-### Priority Mitigations
-1. [Concrete action 1]
-2. [Concrete action 2]
-3. [Concrete action 3]
+### Root Cause Analysis
+For every finding above, trace from symptom to root cause using Five Whys.
+
+**[Finding A]**
+1. Why? → ...
+2. Why? → ...
+3. Why? → ...
+**Root Cause**: [systemic factor]
+
+**[Finding B]**
+1. Why? → ...
+...
+
+### Recommendations (Ranked by Impact)
+Each recommendation traces back to a root cause above.
+
+**Recommendation 1 (Impact: ⭐⭐⭐)**
+- What: [Concrete action]
+- When: [Timing]
+- Who: [Role]
+- Expected outcome: [What changes]
+- Traces to: [Root cause(s)]
+
+**Recommendation 2 (Impact: ⭐⭐)**
+...
+
+### Unaddressed Root Causes
+[Call out any root cause that lacks a matching recommendation — this is a gap]
 ```
 
-### 5. Offer Customisation
+### 7. Offer Customisation
 After the report, offer these variants:
 - **Adjust timeframe** — "Want to run this again with a shorter/longer horizon?"
 - **Focus on a dimension** — "Want to zero in on just technical failure / market adoption / operations?"

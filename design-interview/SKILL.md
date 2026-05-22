@@ -26,6 +26,37 @@ Reach a state where:
 
 ---
 
+## 📥 Phase 0 — Gather Context Sources
+
+Before the interview begins, ask the user where existing context lives. The
+agent should review this context **before** asking the first design question,
+so the interview builds on what already exists rather than starting from
+scratch.
+
+Ask exactly once:
+
+> "Before we start the design interview: is there existing context I should
+> review? For example — a codebase (repo path or file), a document, a Notion
+> page, a spec draft, meeting notes, past ADRs, or an architecture diagram.
+> Point me at anything that's relevant and I'll read it first."
+
+**If the user provides sources:**
+- Read codebases via directory listing and key file inspection (focus on
+  existing models, architectural patterns, and domain boundaries).
+- Fetch and read any linked documents or pages.
+- Absorb the context, then begin the interview. Reference the reviewed
+  material during the session — e.g. "I see your existing `Order` model
+  already handles partial refunds. Does the new feature extend that, or is
+  it separate?"
+
+**If the user says no context exists:**
+- Proceed directly to the interview. Make no assumptions about prior art.
+
+**If the user says "I'll tell you during":**
+- Respect that and proceed. Do not push.
+
+---
+
 ## 🔁 Interview Protocol
 
 ### One question at a time
