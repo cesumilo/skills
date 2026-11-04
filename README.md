@@ -24,6 +24,11 @@ This repository contains a collection of agent skills for AI coding assistants. 
 
 **When to use:** Use before launching a product, starting a complex project, making a major architectural decision, or after a design-interview session to stress-test the clarified plan.
 
+### 5. **AI-native SDLC (ai-native-sdlc)**
+**Description:** Teaches the agent to work with the artifact chain. Every change moves through intent, spec, plan, code with tests, and a pull request. Each stage commits a versioned artifact that the next stage reads, and the commit history is the audit trail. Covers plan-before-code, the feedback loop, institutional knowledge as files, hooks as approval gates, closing the loop, and the metrics per stage.
+
+**When to use:** Use for feature work, refactors, and bug fixes in a repository that follows the AI-native SDLC. Derived from Anthropic's AI-native SDLC playbook and applied in the rove repository.
+
 ## How to Use Skills with Vercel Labs Skills CLI
 
 ### Installing Skills from this Repository
@@ -91,6 +96,14 @@ The premortem-this skill provides:
 - 📊 Ranked recommendations, each traced to a root cause
 - 📋 A single structured premortem report
 
+### Using AI-native SDLC Skill
+The ai-native-sdlc skill provides:
+- 🔗 The five-stage artifact chain: intent, spec, plan, code and tests, pull request
+- 📝 Plan before code, with an approved plan committed first
+- 🔁 A feedback loop so each session checks its own work
+- 🛡️ Hooks as approval gates and a production gate the agent cannot cross
+- 📈 A leading and a lagging indicator for each stage
+
 ## Skill Integration
 
 These skills are designed to work together:
@@ -98,7 +111,9 @@ These skills are designed to work together:
 1. **File Writing + All skills**: Ensures safe, reliable file operations across all workflows
 2. **Design Interview + Learn**: Interview questions and design decisions can be explored with the Socratic learning ladder
 3. **Design Interview + Premortem**: Design-interview clarifies the plan, then premortem-this stress-tests it
-4. **All skills**: Comprehensive workflow covering learning, design, stress-testing, and reliable file operations
+4. **AI-native SDLC + Simple English**: The intent, the spec, and the plan are written in Simple English
+5. **AI-native SDLC + Design Interview + Premortem**: The interview resolves the spec decisions, and the premortem stress-tests the spec before implementation
+6. **All skills**: Comprehensive workflow covering learning, design, stress-testing, artifact-chain delivery, and reliable file operations
 
 ## Managing Installed Skills
 
@@ -155,6 +170,7 @@ Skills in this repository:
 - `file-writing/` - Safe file writing and chunking
 - `design-interview/` - Structured design interview process
 - `premortem-this/` - Autonomous premortem stress-testing
+- `ai-native-sdlc/` - Artifact-chain working method
 
 Each skill directory contains a `SKILL.md` file with the complete skill definition.
 
