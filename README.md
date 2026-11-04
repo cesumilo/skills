@@ -9,55 +9,20 @@ This repository contains a collection of agent skills for AI coding assistants. 
 
 **When to use:** Use with explicit triggers like "help me learn X", "explain Y", or "I'm trying to understand Z".
 
-### 2. **Domain-Driven Design (ddd)**
-**Description:** Guides Domain-Driven Design architecture across four layers (domain, application, infrastructure, presentation) organized by bounded context. Enforces dependency rules, tactical patterns, ubiquitous language, and aggregate rules. Supports greenfield and incremental legacy migration.
-
-**When to use:** Use when building complex business applications with rich domain logic, migrating legacy systems, or establishing clean architecture patterns.
-
-### 3. **Long-Term Memory (long-term-memory)**
-**Description:** Maintains a persistent project journal in MEMORY.md across sessions. Records state, architectural decisions, discoveries, task history, and open questions; reconciles with the project's planning documents; archives old entries automatically.
-
-**When to use:** Use for any project to maintain continuity across sessions, track architectural decisions, and preserve project knowledge.
-
-### 4. **Pair Programming Mode (pair-mode)**
-**Description:** Pair programming navigator mode. Toggles a state where the agent scaffolds structure and writes failing tests, but refuses to implement business logic — the user writes it.
-
-**When to use:** Use when you want to actively participate in implementation while the agent provides guidance, scaffolding, and review.
-
-### 5. **TDD Workflow (tdd-workflow)**
-**Description:** Enforces strict Test-Driven Development (Red-Green-Refactor) workflow for any language or framework.
-
-**When to use:** Use whenever implementing new features, fixing bugs, or modifying behavior in code to ensure test coverage and maintainable code.
-
-### 6. **Code Quality (code-quality)**
-**Description:** Proactively guides and enforces code quality practices: eliminating magic numbers and strings, constructor-based dependency injection, and thorough documentation. Flags violations as they are noticed, plans safe incremental refactors.
-
-**When to use:** Use for maintaining high code quality standards, refactoring legacy code, or establishing best practices in new projects.
-
-### 7. **File Writing (file-writing)**
+### 2. **File Writing (file-writing)**
 **Description:** Governs how the agent writes files. Enforces chunked, sequential writes to prevent silent truncation from buffer/context limits.
 
 **When to use:** Use for all file writing operations to ensure reliable, safe file creation and modification.
 
-### 8. **Problem Solving (problem-solving)**
-**Description:** Governs the agent's internal reasoning process and communication style. Enforces hypothesis-driven, test-first, iterate-fast problem solving. Eliminates silent internal loops, premature abstraction, and invisible approach changes.
-
-**When to use:** Use for any non-trivial problem solving to ensure transparent, efficient reasoning and communication.
-
-### 9. **Design Interview (design-interview)**
+### 3. **Design Interview (design-interview)**
 **Description:** Runs structured design interviews to reach shared understanding of plans, features, or systems. Walks design trees branch by branch, resolving decision dependencies, sharpening fuzzy language, and stress-testing with concrete scenarios. Inspired by [Matt Pocock's grill-with-docs skill](https://github.com/mattpocock/skills/blob/main/skills/engineering/grill-with-docs/SKILL.md).
 
 **When to use:** Use when designing new features, reviewing plans, or needing to clarify complex requirements before implementation.
 
-### 10. **Premortem (premortem-this)**
-**Description:** Stress-tests any plan, project, or decision by imagining it has already failed and working backward to discover why. Surfaces hidden assumptions, weak decisions, and missing risks before resources are committed. Inspired by Gary Klein's premortem technique.
+### 4. **Premortem (premortem-this)**
+**Description:** Produces a premortem for a plan, project, or decision by imagining that it already failed and working backward to find the causes. The agent asks for the information it needs, then writes the full analysis alone. The report covers hidden assumptions, weak decisions, missing risks, root causes, and ranked recommendations. Inspired by Gary Klein's premortem technique.
 
 **When to use:** Use before launching a product, starting a complex project, making a major architectural decision, or after a design-interview session to stress-test the clarified plan.
-
-### 11. **Session-to-Spec (session-to-spec)**
-**Description:** Distills the current session into a structured specification document (SPEC.md). Captures design decisions, canonical terms, edge cases, known weak points, open questions, and ADRs. Works with design-interview sessions, premortem findings, and standalone conversations.
-
-**When to use:** Use after a design-interview or premortem-this session, or whenever you want to capture a design discussion as a durable, reviewable spec before implementation begins.
 
 ## How to Use Skills with Vercel Labs Skills CLI
 
@@ -74,7 +39,7 @@ npx skills add cesumilo/skills
 npx skills add cesumilo/skills --list
 
 # Install specific skills
-npx skills add cesumilo/skills --skill ddd --skill tdd-workflow
+npx skills add cesumilo/skills --skill learn --skill file-writing
 
 # Install to specific agents (e.g., OpenCode)
 npx skills add cesumilo/skills -a opencode
@@ -103,60 +68,12 @@ The skills CLI supports installation to various coding agents:
 
 ## Skill Usage Examples
 
-### Using DDD Skill
-When working on a domain-driven design project, the DDD skill will:
-- Guide you through bounded context identification
-- Enforce four-layer architecture (domain, application, infrastructure, presentation)
-- Maintain ubiquitous language glossary
-- Refuse architectural violations
-- Integrate with TDD workflow and long-term memory
-
-### Using Pair Programming Mode
-Activate pair mode with:
-```
-pair on
-```
-
-The agent will:
-- Scaffold file structure and test frameworks
-- Write failing tests (RED phase)
-- Leave TODO comments for implementation
-- Provide hints instead of solutions
-- Review your implementation
-
-Deactivate with:
-```
-pair off
-```
-
-### Using TDD Workflow
-The TDD skill automatically enforces:
-- 🔴 **RED**: Write failing test first
-- 🟢 **GREEN**: Minimal implementation to pass
-- 🔵 **REFACTOR**: Clean up while keeping tests green
-
-### Using Code Quality Skill
-The code-quality skill continuously:
-- 🔍 Scans for magic numbers and strings
-- 🏗️ Enforces constructor-based dependency injection
-- 📝 Ensures thorough documentation
-- 📋 Plans safe, incremental refactoring
-- ⚠️ Flags violations as they're discovered
-
 ### Using File Writing Skill
 The file-writing skill ensures:
 - 📏 No more than 50 lines per write operation
 - 🔁 Sequential chunked writes from beginning to end
 - ✅ Verification after each chunk
 - 📋 Clear communication about what was written and what remains
-
-### Using Problem Solving Skill
-The problem-solving skill enforces:
-- 🧠 One hypothesis at a time approach
-- ⚡ Maximum 2 internal iterations before asking for help
-- 📐 Decision format with risk assessment and test verification
-- ❓ Explicit questions when torn between approaches
-- 🔄 Transparent approach changes instead of silent restarts
 
 ### Using Design Interview Skill
 The design-interview skill provides:
@@ -166,47 +83,22 @@ The design-interview skill provides:
 - 🧪 Stress-testing with concrete scenarios
 - 📋 ADR creation only for hard-to-reverse, surprising, trade-off decisions
 
-### Using Session-to-Spec Skill
-Activate with:
-```
-spec this
-```
-
-The skill will:
-- 📐 Compose a structured `SPEC.md` from the session's design decisions
-- 📝 Capture canonical terms, edge cases, weak points, open questions, and ADRs
-- 🔄 Intelligently update an existing `SPEC.md` when iterating on the same feature
-- 📋 Prompt you to review carefully after writing
-- 🧠 Add a journal entry to `MEMORY.md` via `long-term-memory`
-
-Works after:
-```
-design-interview → premortem-this → session-to-spec
-```
-Or standalone:
-```
-specify this
-```
+### Using Premortem Skill
+The premortem-this skill provides:
+- 📥 A mandatory information-gathering step before the analysis starts
+- 🧠 Autonomous production of the failure analysis, with no discovery questions
+- 🔎 Root cause tracing with the Five Whys method
+- 📊 Ranked recommendations, each traced to a root cause
+- 📋 A single structured premortem report
 
 ## Skill Integration
 
 These skills are designed to work together:
 
-1. **DDD + TDD**: Domain layer tests are pure unit tests, application layer tests mock repositories
-2. **DDD + Long-Term Memory**: Records bounded contexts, architectural decisions, and discoveries
-3. **Pair Mode + TDD**: Agent writes tests, user implements to make them pass
-4. **Code Quality + All skills**: Enforces quality standards across all workflows
-5. **File Writing + All skills**: Ensures safe, reliable file operations across all workflows
-6. **Problem Solving + All skills**: Provides transparent reasoning and efficient decision-making
-7. **Design Interview + TDD**: Interview decisions become acceptance criteria for failing tests
-8. **Design Interview + Premortem**: Design-interview clarifies the plan, then premortem stress-tests it
-9. **Premortem + Long-Term Memory**: Record premortem findings as architectural decisions in MEMORY.md
-10. **Premortem + DDD**: Stress-test bounded context boundaries and aggregate designs before implementation
-11. **Design Interview + Session-to-Spec**: Design-interview clarifies decisions, then session-to-spec distills them into SPEC.md
-12. **Premortem + Session-to-Spec**: Premortem findings populate the Known Weak Points & Remediations section of the spec
-13. **Session-to-Spec + Long-Term Memory**: Spec creation is recorded as a journal entry in MEMORY.md for cross-session discovery
-14. **Session-to-Spec + TDD**: Spec decisions become acceptance criteria for the first failing tests
-15. **All skills**: Comprehensive workflow covering architecture, testing, quality, reasoning, memory, design, specification, and collaboration
+1. **File Writing + All skills**: Ensures safe, reliable file operations across all workflows
+2. **Design Interview + Learn**: Interview questions and design decisions can be explored with the Socratic learning ladder
+3. **Design Interview + Premortem**: Design-interview clarifies the plan, then premortem-this stress-tests it
+4. **All skills**: Comprehensive workflow covering learning, design, stress-testing, and reliable file operations
 
 ## Managing Installed Skills
 
@@ -218,7 +110,7 @@ npx skills list
 npx skills update
 
 # Remove skills
-npx skills remove ddd
+npx skills remove learn
 
 # Find more skills
 npx skills find
@@ -260,16 +152,9 @@ Describe scenarios where this skill should be activated.
 
 Skills in this repository:
 - `learn/` - Socratic learning guide
-- `ddd/` - Domain-Driven Design architecture
-- `long-term-memory/` - Project memory management
-- `pair-mode/` - Pair programming workflow
-- `tdd-workflow/` - Test-Driven Development
-- `code-quality/` - Code quality and refactoring guidance
 - `file-writing/` - Safe file writing and chunking
-- `problem-solving/` - Transparent reasoning and decision-making
 - `design-interview/` - Structured design interview process
-- `premortem-this/` - Premortem stress-testing of plans and decisions
-- `session-to-spec/` - Session-to-specification distillation
+- `premortem-this/` - Autonomous premortem stress-testing
 
 Each skill directory contains a `SKILL.md` file with the complete skill definition.
 

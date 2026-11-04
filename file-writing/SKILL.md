@@ -1,68 +1,32 @@
 ---
 name: file-writing
-description: >
-  Governs how the agent writes files. Enforces chunked, sequential writes
-  to prevent silent truncation from buffer/context limits.
+description: Governs how the agent writes files. The skill enforces chunked, sequential writes to prevent silent truncation from buffer limits and context limits.
 ---
 
-# File Writing — Chunked, Sequential, Verified
+# File Writing, Chunked, Sequential, Verified
 
-This skill applies to every file write operation — new files and modifications
-alike. Never write an entire file in a single operation.
+This skill applies to each file write operation, for new files and modifications. The agent never writes a whole file in one operation.
 
----
+## Core Rules
 
-## 📏 Core Rules
+No write operation contains more than 50 lines. The agent splits each file that is longer than 50 lines into at least two chunks. This rule has no exceptions, even when the file looks short.
 
-### Chunk size
-No more than **50 lines per write operation**.
+The agent writes from the beginning and appends each later chunk in order. The agent never writes chunks out of sequence.
 
-### Always chunk
-Even if a file appears short enough to write in one pass — if it exceeds
-50 lines, split it into at least 2 chunks. No exceptions.
+## Workflow
 
-### Sequential order
-Write from the beginning. Append each subsequent chunk in order. Never
-write chunks out of sequence.
+For a new file, the agent creates the file with the first chunk of lines 1 to 50. The agent then appends the remaining chunks one at a time.
 
----
+For a modification or a rewrite, the agent writes the first part of the new content. The agent then appends the rest in chunks of 50 lines.
 
-## 🔁 Workflow
+After each chunk, the agent states two things. It states what it wrote, with the line range and a summary. It states what remains.
 
-### New files
-1. Create the file with the first chunk (lines 1–50).
-2. Append remaining chunks one at a time.
+For example, the agent says, "I wrote lines 1 to 50, the file header and imports. Next are the core logic, lines 51 to 100."
 
-### Modifications / rewrites
-1. Write the first portion of the new content.
-2. Append the rest in successive 50-line chunks.
+## Completion
 
-### After each chunk
-Briefly state:
-- What was written (line range + content summary).
-- What remains.
+After the final chunk, the agent makes sure that the file is complete. The agent confirms the expected line count. The agent notes each section that needs review.
 
-Example:
-> "Wrote lines 1–50: file header and imports. Next: core logic, lines 51–100."
+## Integration
 
----
-
-## ✅ Completion
-
-After the final chunk, verify the file is complete:
-- Confirm expected line count.
-- Note any sections that should be reviewed.
-
----
-
-## 🔗 Integration
-
-### `long-term-memory`
-When writing or updating `MEMORY.md`, apply chunked writes. Prefer
-append-style operations over full-file rewrites where possible, per the
-memory skill's own writing strategy.
-
-### All other file operations
-This skill applies universally — docs, configs, code, skill files, and any
-other artifact the agent produces.
-
+This skill applies to each file operation. The scope includes documentation, configuration files, code, skill files, and other artifacts. The agent writes each artifact from the beginning and appends the rest in order.

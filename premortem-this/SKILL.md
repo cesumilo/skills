@@ -1,178 +1,176 @@
 ---
 name: premortem-this
 description: >
-  Stress-tests any plan, project, or decision by imagining it has already failed
-  and working backward to discover why. Surfaces hidden assumptions, weak
-  decisions, and missing risks before resources are committed. Activate when the
-  user says "premortem this", "stress test this plan", "what could go wrong",
-  "poke holes in this", "what am I missing", or after a design-interview session
-  to stress-test a clarified plan.
+  Produces a premortem for a plan, project, or decision by imagining that it
+  already failed and working backward to find the causes. The agent asks for the
+  information it needs, then writes the full analysis alone. The report covers
+  hidden assumptions, weak decisions, missing risks, root causes, and ranked
+  recommendations. Activate it when the user says "premortem this", "stress test
+  this plan", "what could go wrong", "poke holes in this", or "what am I missing".
 ---
 
 # premortem-this
 
-## Description
-Stress-tests any plan, project, or decision by imagining it has already failed and working backward to discover why. Uses prospective hindsight (popularized by Gary Klein) to surface hidden assumptions, weak decisions, missing risks, and the most likely and most dangerous failure points — before resources are committed.
+This skill makes the agent produce a premortem. The agent does not guide the
+user through discovery questions. The agent gathers the facts it needs, then
+writes the analysis and the report alone.
+
+A premortem imagines that a plan already failed. The agent works backward from
+the failure to find the causes. The method uses prospective hindsight.
 
 ## When to Use
-- Launching a new product, feature, or service
-- Starting a complex multi-sprint project
-- Making a major architectural or technical decision
-- Preparing for high-stakes events (migrations, launches, pitches)
-- Choosing between multiple options where the downside is severe
-- After using **design-interview** to clarify a plan — premortem stress-tests that clarified plan
 
-## Instructions
+- Before a product launch, a feature release, or a service launch.
+- At the start of a complex project that spans several sprints.
+- Before a major architectural or technical decision.
+- Before a high-stakes event, such as a migration, a launch, or a pitch.
+- When the user chooses between options with a severe downside.
+- After a design-interview session, to stress-test the clarified plan.
 
-You are facilitating a premortem. Follow this structure.
+## Step 1, Gather the Required Information
 
-### 1. Gather Context
-If the user hasn't already provided it, ask for:
-- The plan, decision, or project being evaluated
-- Key stakeholders or systems involved
-- Time horizon for the failure (default: 6 months; adjust for software: "2 sprints" or "after launch")
+The agent must have enough facts before it starts the premortem. If the user
+gave the facts already, the agent confirms them. If the user gave some facts,
+the agent asks for the missing ones.
 
-### 2. Set the Scene
-Vividly frame the failure scenario:
-> "It is now [timeframe] later. The [project/decision] has failed badly. The original goals were not met. Resources were wasted. Trust was damaged. You are the investigator writing the failure postmortem. Your job is to explain exactly what happened and why."
+The agent asks for these items:
 
-### 3. Guide Discovery
-Use open-ended, blame-safe questions. Draw out:
+1. The plan, decision, or project under review, with its goal and its success criteria.
+2. The key stakeholders and the systems involved.
+3. The time horizon for the failure. The default is six months. For software, the agent uses "two sprints" or "after launch".
+4. The constraints, such as budget, deadline, team size, and dependencies.
+5. The known risks and the prior incidents.
 
-**Hidden Assumptions**
-- What did we believe to be true that turned out to be false?
-- What did we assume about users, technology, the market, our capabilities, or our constraints?
+The agent asks all questions in one message. The agent does not begin the
+analysis until the user answers or confirms that no more facts exist. If a fact
+is unknown, the agent records it as unknown and continues.
 
-**Weak Decisions**
-- Which specific decision points seemed reasonable at the time but proved wrong?
-- Where did we prioritise speed over safety in a way that backfired?
+## Step 2, Set the Scene
 
-**Missing or Dismissed Risks**
-- What risks did we see but dismiss as unlikely or unimportant?
-- What risks did we never even discuss?
-- What external shock hit us that was foreseeable?
+The agent frames the failure in one short paragraph. The frame names the time
+horizon and the meaning of failure. For example:
 
-**Coordination and Communication Failures**
-- Where did misalignment between people or teams cause damage?
-- What important information didn't reach the right people in time?
+> It is now [timeframe] later. The [project or decision] failed. The team did
+> not meet the original goals, the work wasted resources, and the trust of the
+> stakeholders dropped. You are the investigator who writes the failure
+> postmortem.
 
-**Most Likely Failure Point**
-- If you had to bet on a single cause, which one would it be?
+## Step 3, Find the Failure Causes
 
-**Most Dangerous Failure Point**
-- Which cause would have the most severe consequences, even if it's less likely?
+The agent writes the analysis alone. The agent covers these areas:
 
-### 4. Root Cause Analysis
-For every failure point surfaced in discovery, trace from symptom to root cause. Use the Five Whys technique: starting from "why did this happen?", drill deeper until you reach a systemic or structural cause. Avoid stopping at surface-level answers or blaming individuals. For each finding, record:
+- Hidden assumptions. The beliefs that turned out to be false, about users, technology, the market, the capabilities of the team, or the constraints.
+- Weak decisions. The decision points that looked reasonable at the time and proved wrong. Include each case where the team chose speed over safety.
+- Missing or dismissed risks. The risks that the team saw and dismissed, the risks that the team never discussed, and the foreseeable external shocks.
+- Coordination and communication failures. The places where misalignment between people or teams caused damage. Include the important information that did not reach the right people in time.
+- Most likely failure point. The single cause with the highest probability.
+- Most dangerous failure point. The cause with the most severe consequences, even when the probability is lower.
 
-```
-## Finding: [Symptom]
+## Step 4, Trace Each Cause to a Root Cause
 
-**Why Chain**
-1. Why? → [immediate cause]
-2. Why? → [deeper cause]
-3. Why? → [even deeper cause]
-4. Why? → [systemic factor]
-5. Why? → [root cause — a structural gap in process, incentives, knowledge, tooling, or organisational design]
+For each failure point, the agent traces from the symptom to the root cause. The
+agent uses the Five Whys method. The agent starts with "why did this happen?"
+and drills deeper until it reaches a systemic cause. The agent does not stop at
+a surface answer and does not blame a person.
 
-**Root Cause (summary)**: [One sentence that captures the deepest systemic factor]
-```
-
-If you hit a root cause earlier than 5 whys, stop — no need to force it. If more than 5 whys are needed, continue.
-
-### 5. Generate Recommendations
-For every root cause, produce one or more concrete, ranked recommendations. Each recommendation must:
-- Describe **what** action to take
-- Specify **when** it should be done (before launch, during sprint planning, continuously, etc.)
-- Name **who** is responsible (role, not person; e.g. "tech lead", "product owner", "ops")
-- State the **expected outcome** (what changes if this is done)
-- Be **ranked** by impact (1 = highest impact / most urgent)
-
-Root causes without a corresponding recommendation are a red flag — every root cause deserves at least one mitigation.
+The agent writes each finding in this form:
 
 ```
-### Recommendation 1 (Impact: ⭐⭐⭐)
+Finding: [symptom]
 
-**What**: [Concrete action]
-**When**: [Timing]
-**Who**: [Role responsible]
-**Expected outcome**: [What this prevents or enables]
-**Traces to**: [Root cause(s) this addresses]
+Why chain
+1. Why? [immediate cause]
+2. Why? [deeper cause]
+3. Why? [even deeper cause]
+4. Why? [systemic factor]
+5. Why? [root cause, a structural gap in process, incentives, knowledge, tooling, or organization]
+
+Root cause: [one sentence with the deepest systemic factor]
 ```
 
-### 6. Synthesise and Report
-Deliver a structured summary:
+If the agent reaches a root cause before five whys, it stops. If the agent needs
+more than five whys, it continues.
+
+## Step 5, Write the Recommendations
+
+For each root cause, the agent writes one or more recommendations. Each
+recommendation states five things: the action, the timing, the responsible role,
+the expected outcome, and the root cause it addresses. The agent ranks each
+recommendation by impact. Rank 1 has the highest impact and the most urgency.
+
+The agent writes each recommendation in this form:
 
 ```
-## Premortem Report: [Plan/Decision Name]
+Recommendation 1 (Impact: high)
 
-### Failure Scenario
-[Restate the frame: timeframe, what "failed" means]
-
-### Hidden Assumptions
-- [Assumption 1]
-- [Assumption 2]
-
-### Weak Decisions
-- [Decision 1] — why it seemed right, why it was wrong
-- [Decision 2]
-
-### Missing Risks
-- [Risk 1] — why it was overlooked
-- [Risk 2]
-
-### Most Likely Failure Point
-[Single most probable cause — the bet-you'd-make answer]
-
-### Most Dangerous Failure Point
-[Most severe consequence cause, even if lower probability]
-
-### Root Cause Analysis
-For every finding above, trace from symptom to root cause using Five Whys.
-
-**[Finding A]**
-1. Why? → ...
-2. Why? → ...
-3. Why? → ...
-**Root Cause**: [systemic factor]
-
-**[Finding B]**
-1. Why? → ...
-...
-
-### Recommendations (Ranked by Impact)
-Each recommendation traces back to a root cause above.
-
-**Recommendation 1 (Impact: ⭐⭐⭐)**
-- What: [Concrete action]
-- When: [Timing]
-- Who: [Role]
-- Expected outcome: [What changes]
-- Traces to: [Root cause(s)]
-
-**Recommendation 2 (Impact: ⭐⭐)**
-...
-
-### Unaddressed Root Causes
-[Call out any root cause that lacks a matching recommendation — this is a gap]
+Action: [concrete action]
+Timing: [before launch, during sprint planning, or continuous]
+Role: [role, not a person, for example tech lead, product owner, or operations]
+Expected outcome: [what changes]
+Addresses: [root causes]
 ```
 
-### 7. Offer Customisation
-After the report, offer these variants:
-- **Adjust timeframe** — "Want to run this again with a shorter/longer horizon?"
-- **Focus on a dimension** — "Want to zero in on just technical failure / market adoption / operations?"
-- **Competitor premortem** — "Want to imagine our competitor beat us and work backward from that?"
-- **Decision premortem** — If the user is choosing between options, offer: "Want to run separate premortems for Option A and Option B and compare?"
+A root cause without a recommendation is a gap. The agent reports each such gap
+in the final report.
+
+## Step 6, Produce the Report
+
+The agent delivers one report. The report is the only artifact of the skill, and
+the agent writes it in full without more input from the user. The report has
+these sections:
+
+```
+Premortem report: [plan or decision]
+
+Failure scenario
+[the frame, with the timeframe and the meaning of failure]
+
+Hidden assumptions
+[list]
+
+Weak decisions
+[list, with the reason each decision looked right and the reason it was wrong]
+
+Missing risks
+[list, with the reason each risk was overlooked]
+
+Most likely failure point
+[the single most probable cause]
+
+Most dangerous failure point
+[the most severe cause, even when the probability is lower]
+
+Root cause analysis
+[each finding with its why chain and its root cause]
+
+Recommendations, ranked by impact
+[each recommendation in the form above]
+
+Unaddressed root causes
+[each root cause without a matching recommendation]
+```
+
+## Step 7, Offer the Variants
+
+After the report, the agent offers these options:
+
+- A different time horizon, for example a shorter horizon or a longer horizon.
+- A single dimension, for example technical failure, market adoption, or operations.
+- A competitor premortem, which imagines that a competitor won and works backward.
+- A decision premortem, which runs separate premortems for two options and compares them.
 
 ## Safety and Mindset
-- This is a **blame-free zone**. You are finding systemic causes, not assigning fault.
-- All hypotheses are possibilities, not predictions. Avoid reinforcing catastrophising.
-- After the exercise, explicitly note that confronting worst-case scenarios builds *more* confidence in the plan, not less.
-- Follow the reasoning transparency standards from the **problem-solving** skill: make your thinking visible, avoid silent internal loops, and flag when you change approach.
 
-## Integration with Other Skills
-- **design-interview**: Run after design-interview has clarified the plan. Design-interview sharpens; premortem stress-tests.
-- **long-term-memory**: Prompt the user to record premortem findings as architectural decisions or open questions in MEMORY.md.
-- **ddd**: Use premortem to stress-test bounded context boundaries and aggregate designs before implementation.
-- **problem-solving**: Adhere to its hypothesis-driven, iterate-fast reasoning style throughout.
+The premortem is a blame-free analysis. The agent finds systemic causes and does
+not assign fault. Each hypothesis is a possibility, not a prediction, so the
+agent does not increase the fear of the user. After the analysis, the agent
+states one fact: confronting a worst-case scenario increases confidence in the
+plan, because the team can correct the causes before they happen.
 
+## Integration
+
+The agent runs this skill after a design-interview session, because the
+interview clarifies the plan and this skill stress-tests it. If the session
+produces artifacts, the agent writes them with the chunked method from the
+file-writing skill. When the user needs to understand a concept behind a finding,
+the agent hands off to the learn skill.
