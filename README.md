@@ -29,6 +29,11 @@ This repository contains a collection of agent skills for AI coding assistants. 
 
 **When to use:** Use for feature work, refactors, and bug fixes in a repository that follows the AI-native SDLC. Derived from Anthropic's AI-native SDLC playbook and applied in the rove repository.
 
+### 6. **Human-Readable Code (human-readable-code)**
+**Description:** Enforces strict visual rhythm, line-breaking, flat control flow, and natural naming so code reads cleanly for humans. Covers 80-character soft wrapping, one idea per line, paragraph spacing, early returns, flat nesting, top-down reading order, and high-signal comments.
+
+**When to use:** Use for any code-writing or refactoring task where clarity for human readers matters more than terseness.
+
 ## How to Use Skills with Vercel Labs Skills CLI
 
 ### Installing Skills from this Repository
@@ -104,6 +109,14 @@ The ai-native-sdlc skill provides:
 - 🛡️ Hooks as approval gates and a production gate the agent cannot cross
 - 📈 A leading and a lagging indicator for each stage
 
+### Using Human-Readable Code Skill
+The human-readable-code skill provides:
+- 📏 An 80-character soft wrap with one idea per line
+- 🌬️ Paragraph spacing around blocks and grouped logic
+- 🔀 Flat control flow with early returns over `else`
+- 🧭 Top-down reading order and declare-right-before-use
+- 🏷️ Human-friendly, spelled-out naming and high-signal comments
+
 ## Skill Integration
 
 These skills are designed to work together:
@@ -114,6 +127,7 @@ These skills are designed to work together:
 4. **AI-native SDLC + Simple English**: The intent, the spec, and the plan are written in Simple English
 5. **AI-native SDLC + Design Interview + Premortem**: The interview resolves the spec decisions, and the premortem stress-tests the spec before implementation
 6. **All skills**: Comprehensive workflow covering learning, design, stress-testing, artifact-chain delivery, and reliable file operations
+7. **Human-Readable Code + AI-native SDLC**: The code and tests stage is written in a readable, scannable style
 
 ## Managing Installed Skills
 
@@ -171,6 +185,7 @@ Skills in this repository:
 - `design-interview/` - Structured design interview process
 - `premortem-this/` - Autonomous premortem stress-testing
 - `ai-native-sdlc/` - Artifact-chain working method
+- `human-readable-code/` - Readable, scannable code style
 
 Each skill directory contains a `SKILL.md` file with the complete skill definition.
 
