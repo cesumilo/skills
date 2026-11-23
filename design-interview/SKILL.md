@@ -43,10 +43,13 @@ If the project has a `GLOSSARY.md`, read it first. Its terms are binding for the
 
 Ask exactly one question and wait for the answer. Never batch questions. Never move to the next branch until the current branch is resolved.
 
-For each question, give a recommended answer first:
+For each question, state the question first. Then give a recommended answer. Never give the recommendation without the question.
 
 ```
+Question: [the one question].
+
 My recommendation: [answer].
+
 Reason: [one sentence].
 Do you agree, or do you want a change?
 ```
@@ -55,15 +58,16 @@ Do you agree, or do you want a change?
 
 Sharpen fuzzy language. When the user uses a vague or overloaded term, propose a precise canonical term at once. Say, "You said 'account'. Do you mean the Customer (the billing entity) or the User (the person who logs in)? I use the term that you confirm." After the user confirms a term, use it for the rest of the session and record it in `GLOSSARY.md`.
 
-Name every new concept. A new concept can be a feature, an architectural component, a domain entity, or a process. Do not leave it as description: agree one word or short phrase to name it. Say, "This thing that decides which warehouse ships an order. Do we call it the Fulfilment Router? I use that name from here on." Name the concept before building on it.
+Name every new concept. A new concept can be a feature, an architectural component, a domain entity, or a process. Do not leave it as description: agree one word or short phrase to name it. Say, "This thing that decides which warehouse ships an order. Do we call it the Fulfilment Router? I use that name from here on." Name the concept before building on it. Name it by its role, not by its class name.
 
 Keep the glossary current. `GLOSSARY.md` at the repository root is the shared source of truth for what words mean in the project. If the project keeps documentation elsewhere, follow that convention and say where the file lives.
 
 - Write on agreement, not at the end of the session. Update the entry when its definition changes.
 - Read each new or changed entry back to the user so agreement is explicit.
-- Check for an existing entry before defining a concept. Reuse it and never invent a second name for the same concept.
+- Check for an existing entry before defining a concept. Reuse it and never invent a second name for the same concept. One deliberate layer pair is allowed when the product and the code use different names for the same concept; record the mapping and mark it as intentional, not as a synonym.
 - Correct collisions on the spot: "That is the Customer per the glossary. I keep using that term."
 - Two concepts never share one word. Split them into two entries and ask the user to confirm the difference. If the same word must serve both concepts, record the decision as an ADR, regardless of the ADR conditions below.
+- Define product and domain terms, not code identifiers. A class, function, or type name is already defined in the code. Add a code term only when it carries product meaning or is overloaded, and then define the concept, not the class.
 
 Use one entry per concept, in alphabetical order, with the term, a precise project definition, and the words to avoid. See [references/glossary-format.md](references/glossary-format.md).
 
