@@ -1,41 +1,59 @@
 ---
 name: human-readable-code
-description: Enforce strict visual rhythm, line-breaking, flat control flow, and natural naming so code reads cleanly for humans.
+description: Applies readability rules to hand-written code: line rhythm, flat control flow, narrative order, naming, and comments. Defers to the project formatter for anything it can enforce. Use when writing, refactoring, or reviewing code for readability, or when a reviewer asks to make code easier to scan.
 ---
 
-# Human-Readable Code Skill
+# Human-Readable Code
 
-Write code for the human eye first, not just the compiler. Every file should be effortless to scan top-to-bottom without horizontal scrolling, mental backtracking, or deciphering dense one-liners.
+Write code for the human eye first. Every file should scan top-to-bottom without horizontal scrolling, mental backtracking, or deciphering dense one-liners.
 
-## 1. Line Breaks & Visual Rhythm
-- **80-Character Soft Wrap:** Break lines around 80 characters (never exceed 100). A human eye should never have to scroll horizontally to read a statement.
-- **One Idea Per Line:** Never put two statements on the same line, and never pack multiple operations into a single dense expression.
-- **Vertical Lists for Long Calls:** When a function call, array, or object has more than 3 items—or exceeds the line limit—put every item on its own indented line.
-- **Stacked Method Chains:** When chaining 2 or more method calls, put each call on a new indented line so each transformation step stands out clearly.
-- **Paragraph Spacing (Blank Lines):**
-  - Put a single blank line before and after every `if`, `for`, `while`, `switch`, and `try` block.
-  - Put a single blank line before a final `return` statement when preceded by 2 or more lines of logic.
-  - Group tightly related lines into 3–6 line "paragraphs" separated by a single blank line. Never use double blank lines.
+## Precedence
 
-## 2. Control Flow & Indentation
-- **No One-Line `if` / Loops:** Never write `if (x) return y;` or `for (...) doWork();` on one line. Always place the body on a new line with braces `{}` (or proper block indentation).
-- **Early Returns Over `else`:** Exit early for edge cases and errors at the top of a function. Never wrap the main logic inside an `else` block after a `return` or `throw`.
-- **Flat Over Nested (Max 2 Indents):** Keep indentation shallow. If logic nests deeper than 2 levels, extract the inner block into a named helper function.
-- **No Nested Ternaries:** Never nest ternary operators (`a ? b : c ? d : e`). Use standard `if-else` or `switch` blocks so each branch has its own line.
-- **Extract Complex Conditions:** Never put more than 2 boolean checks inside an `if (...)`. Assign the condition to a clear boolean variable on the line above (`canPublishArticle = ...`).
+The project formatter and linter win. Run them and accept their output. Apply this skill only where they cannot reach: naming, control flow, narrative order, comments. When two rules here conflict, clarity wins. Generated code, vendored code, and minified assets are out of scope.
+
+## Language Scope
+
+The rules assume a C-family language. Adapt to the language:
+
+- Python: PEP 8 spacing wins, including two blank lines between top-level definitions.
+- Go, Rust, and other languages with a standard formatter: let the formatter set wrapping and indentation.
+- SQL, YAML, markup, and config: apply naming and narrative order only.
+- Established short names (`i`, `err`, `ctx`, `req`, `res`, `db`, `id`, `url`) are idiomatic. Keep them.
+
+## 1. Line Breaks and Visual Rhythm
+
+- Soft wrap around 80 characters, hard limit 100. Break earlier if a line reads poorly.
+- One idea per line. Do not pack several statements into one dense expression; split an unreadable expression across lines.
+- Long calls: if a call, array, or object has more than 3 items, or the line overflows, put each item on its own indented line.
+- Method chains: stack 3 or more calls, or any chain that overflows the line. Keep two-call chains inline (`user.getName().trim()`).
+- Blank lines: one blank line before and after each control block, and before a final return preceded by logic. Group related lines into short paragraphs and do not stack blank lines beyond what the language style requires.
+
+## 2. Control Flow and Indentation
+
+- Bracketed bodies: put loop and `if` bodies on their own lines, even for one statement. In brace languages, use braces.
+- Early returns over `else`: exit early on edge cases and errors. Do not wrap the main path in `else` after a `return` or `throw`.
+- Flat over nested: prefer at most two indentation levels. Deeper logic usually wants a named helper; extract when it improves reading, not mechanically.
+- No nested ternaries. Use if/else or switch so each branch has its own line.
+- Extract complex conditions: if an `if` holds more than two boolean checks, assign the condition to a named boolean on the line above (`canPublishArticle = ...`).
 
 ## 3. Reading Order (Top-Down Narrative)
-- **Stepdown Rule:** Organize files from high-level to low-level. Place public entry-point functions at the top and the private helper functions they call directly below them.
-- **Declare Right Before Use:** Introduce variables on the line immediately before they are needed, not in a giant block at the top of a function.
-- **Keep `try` Blocks Tiny:** Wrap only the exact 1–3 lines that can actually throw an error inside a `try` block so the reader immediately sees what might fail.
+
+- Stepdown: put public entry points first, then the helpers they call directly below.
+- Declare right before use: introduce a variable immediately before it is needed, not in a block at the top.
+- Keep `try` blocks small: wrap only the lines that can actually throw, so the reader sees what may fail.
 
 ## 4. Human-Friendly Naming
-- **Read Like English:** Name booleans as yes/no questions (`isExpired`, `hasAccess`, `canRetry`) and functions as clear actions (`sendInvoice`, `parseConfig`).
-- **Spell Out Words:** Never shorten words to save keystrokes (`customerAddress` instead of `custAddr`, `messageCount` instead of `msgCnt`).
-- **Avoid Mystery Numbers:** Replace raw numbers and repeated strings with descriptive constant names (`MAX_LOGIN_ATTEMPTS = 5` instead of `5`).
-- **No Negated Booleans:** Prefer positive names (`isEnabled` instead of `isNotDisabled`) so conditionals don't create double negatives (`!isNotDisabled`).
+
+- Read like English: booleans as yes/no questions (`isExpired`, `hasAccess`, `canRetry`); functions as clear actions (`sendInvoice`, `parseConfig`).
+- Spell out words except for established short forms (`customerAddress`, `messageCount`; `id`, `url`, `ctx` are fine).
+- No mystery numbers: replace raw numbers and repeated strings with named constants (`MAX_LOGIN_ATTEMPTS = 5`).
+- Avoid negated booleans: prefer `isEnabled` over `isNotDisabled`.
 
 ## 5. Minimal, High-Signal Comments
-- **Delete Redundant Comments:** Never write comments that repeat what the code already says (e.g., `// increment counter` above `counter++`).
-- **Document Intent Only:** Use brief comments only to explain *why* a non-obvious decision or workaround exists.
 
+- Delete comments that repeat the code (`// increment counter`).
+- Document intent only: explain why a non-obvious decision or workaround exists.
+
+## Integration
+
+The `ai-native-sdlc` skill applies this style in its code-and-tests stage.
