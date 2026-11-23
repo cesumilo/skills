@@ -6,6 +6,8 @@ Review runs in two lanes: a focused reviewer agent and a light human approval. T
 
 The reviewer agent is not the author. It reviews each stacked PR against its own base branch, so it sees only that phase.
 
+The reviewer agent reviews code and pull request diffs only. It reads the intent, the spec, and the plan as context. The design session and a human review those documents; the reviewer never reviews them.
+
 1. List every changed file in the PR. Review each one; do not sample.
 2. Resolve the repository rules that apply to each file.
 3. Read the diff and the surrounding code in the full file. Read related changed files when the change crosses a boundary.
@@ -37,6 +39,10 @@ Consequences:
 - Do not comment on unchanged code unless the change makes it wrong.
 - Do not invent a rule. If no rule applies, report the consequence instead.
 - When unsure, label the finding `minor` and say what would confirm it.
+
+## Review Budget
+
+Each artifact gets one full review and one delta review. Scope is frozen after the first review. A finding blocks only when it is a missing acceptance criterion, a contradiction with the intent, spec, ADR, or glossary, a security issue, a failing verification command, or a defect introduced by the fix. A wording-only or minor finding becomes a follow-up issue and does not start another round. After the delta, merge when no blocker remains; the human decides whether to authorize one more round.
 
 ## Human Lane
 

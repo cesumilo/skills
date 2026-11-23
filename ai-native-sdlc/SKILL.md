@@ -67,8 +67,10 @@ Each implementation phase is its own stacked pull request. Branch phase N from p
 
 Review runs in two lanes:
 
-- A reviewer agent performs the focused review. It reads every changed file, applies the repository rules, and reports structured findings with file and line, severity, evidence, and a suggested change. It reviews each PR against its own base. See [references/review-with-agents.md](references/review-with-agents.md).
+- A reviewer agent performs the focused review. It reviews code and pull request diffs only and reads the intent, spec, and plan as context. It reads every changed file, applies the repository rules, and reports structured findings with file and line, severity, evidence, and a suggested change. It reviews each PR against its own base. See [references/review-with-agents.md](references/review-with-agents.md).
 - A human performs the light review. The human checks that the phase matches the intent, the spec, and the plan, then approves. Branch protection enforces the approval. The agent that wrote the code never approves it.
+
+Review budget: each artifact gets one full review and one delta review. Scope is frozen after the first review. A finding blocks only when it is a missing acceptance criterion, a contradiction with the intent, spec, ADR, or glossary, a security issue, a failing verification command, or a defect introduced by the fix. A wording-only or minor finding becomes a follow-up issue and does not start another round. After the delta review, merge when no blocker remains; the human decides whether to authorize one more round.
 
 Answer review comments on your own pull requests. Fix the findings, or explain why a finding is wrong, and re-run the feedback loop.
 
