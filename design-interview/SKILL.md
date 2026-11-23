@@ -87,6 +87,10 @@ When all three conditions are true, say, "This is an ADR candidate. It is hard t
 
 Write the ADR where the project keeps them. If the location is undocumented, ask before you choose one.
 
+## Closing the Session
+
+End the session when every top-level decision is resolved and the glossary and ADR entries are written. A wording nit is not a decision; record it for the spec review and move on. Do not reopen a resolved decision unless a new fact contradicts it.
+
 ## Integration
 
 When a design question depends on a concept the user does not understand, hand off to the `learn` skill and resume with a sharper decision.
