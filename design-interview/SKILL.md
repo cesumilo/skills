@@ -1,6 +1,6 @@
 ---
 name: design-interview
-description: Runs a structured design interview to reach a shared understanding of a plan, feature, or system. The skill walks the design tree branch by branch and resolves decision dependencies one at a time. Activate it when the user says "interview me", "let's design", "walk me through", or "review my plan", or when the user shares a spec or plan and asks for feedback.
+description: Runs a structured design interview to reach a shared, precise understanding of a plan, feature, or system before implementation starts. Walks the design tree one decision at a time, sharpens vague language into canonical terms, keeps GLOSSARY.md current, and captures hard trade-offs as ADRs. Use when the user says "interview me", "let's design", "walk me through", or "review my plan", shares a spec or plan and asks for feedback, or uses vague or overloaded terminology that needs a canonical definition.
 ---
 
 # Design Interview, Relentless Clarity
@@ -12,58 +12,77 @@ This skill governs a structured design session. The goal is a shared, precise un
 The session reaches a state with these properties:
 
 - Each key decision is explicit and reversible, or the session documents it.
-- The session replaces fuzzy language with precise, canonical terms.
-- The session stress-tests edge cases and domain boundaries with concrete scenarios.
-- The session captures hard, surprising, and trade-off decisions as ADRs (Architecture Decision Records).
+- Each vague term has a precise, canonical name.
+- Each agreed concept has an entry in the project `GLOSSARY.md`.
+- Each edge case and domain boundary is stress-tested with concrete scenarios.
+- Each hard, surprising, or trade-off decision is captured as an ADR (Architecture Decision Record).
+
+## Session Flow
+
+1. Gather context and read the project `GLOSSARY.md`.
+2. List the top-level decisions.
+3. Resolve one decision at a time. Recurse into dependent decisions only after the current decision is resolved.
+4. Agree a canonical term for each vague term and record it in `GLOSSARY.md`.
+5. Agree a name for each new concept and record it in `GLOSSARY.md`.
+6. Capture decisions that meet the ADR test.
 
 ## Phase 0, Gather Context Sources
 
-Before the interview starts, the agent asks the user where existing context lives. The agent reviews this context before the first design question. The interview then builds on what exists and does not start from nothing.
+Before the interview starts, look for existing context in the environment (filesystem, tools, etc.). Review this context before the first design question. The interview then builds on what exists and does not start from nothing.
 
-The agent asks one time:
+Find the project's artifact locations in this order:
 
-> Before we start the design interview, do you have existing context for me to read? For example, a codebase (a repo path or a file), a document, a Notion page, a spec draft, meeting notes, past ADRs, or an architecture diagram. Point me at anything relevant, and I read it first.
+1. Read the agent context file (`AGENTS.md`, `CLAUDE.md`, or equivalent) for documented locations. If it names them, follow it.
+2. If it does not, check the common conventions: `docs/specs/`, `docs/adr/`, `docs/decisions/`, and `GLOSSARY.md`.
+3. Confirm what you found with the user before relying on it.
+4. Record the resolved locations in the glossary or session notes so the next session does not rediscover them.
 
-If the user gives sources:
-
-- The agent reads codebases. It lists the directory and inspects key files. It focuses on existing models, architectural patterns, and domain boundaries.
-- The agent fetches and reads linked documents or pages.
-- The agent absorbs the context and starts the interview. It refers to the material during the session. For example, "I see your existing `Order` model already handles partial refunds. Does the new feature extend that, or is it separate?"
-
-If the user says no context exists:
-
-- The agent starts the interview. The agent makes no assumptions about prior work.
-
-If the user says "I will tell you during":
-
-- The agent accepts this and continues. The agent does not push.
+If the project has a `GLOSSARY.md`, read it first. Its terms are binding for the session. Reuse them and propose new entries where gaps exist.
 
 ## Interview Protocol
 
-One question at a time. The agent asks exactly one question and waits for the answer. The agent never batches questions. The agent never moves to the next branch until the current branch is resolved.
+Ask exactly one question and wait for the answer. Never batch questions. Never move to the next branch until the current branch is resolved.
 
-Always give a recommended answer. For each question, the agent gives its own recommended answer first. The agent says, "My recommendation: [answer]. Reason: [one sentence]. Do you agree, or do you want a change?" This keeps the session moving and forces concrete reactions.
+For each question, give a recommended answer first:
 
-Walk the design tree. The agent identifies the top-level decisions first. It then recurses into sub-decisions. It resolves dependencies between decisions before dependent decisions.
+```
+My recommendation: [answer].
+Reason: [one sentence].
+Do you agree, or do you want a change?
+```
 
 ## During the Session
 
-Sharpen fuzzy language. When the user uses a vague or overloaded term, the agent proposes a precise canonical term at once. The agent says, "You said 'account'. Do you mean the Customer (the billing entity) or the User (the person who logs in)? I use the term that you confirm." After the user confirms a canonical term, the agent uses it for the rest of the session.
+Sharpen fuzzy language. When the user uses a vague or overloaded term, propose a precise canonical term at once. Say, "You said 'account'. Do you mean the Customer (the billing entity) or the User (the person who logs in)? I use the term that you confirm." After the user confirms a term, use it for the rest of the session and record it in `GLOSSARY.md`.
 
-Stress-test with concrete scenarios. When the group discusses domain relationships or boundaries, the agent invents specific scenarios for edge cases. The agent says, "Scenario: a Customer has two Users. One User is deleted. What happens to the billing history of the Customer? Does it stay, transfer, or become orphaned?" A scenario forces precision about behavior at the boundaries, not only the happy path.
+Name every new concept. A new concept can be a feature, an architectural component, a domain entity, or a process. Do not leave it as description: agree one word or short phrase to name it. Say, "This thing that decides which warehouse ships an order. Do we call it the Fulfilment Router? I use that name from here on." Name the concept before building on it.
+
+Keep the glossary current. `GLOSSARY.md` at the repository root is the shared source of truth for what words mean in the project. If the project keeps documentation elsewhere, follow that convention and say where the file lives.
+
+- Write on agreement, not at the end of the session. Update the entry when its definition changes.
+- Read each new or changed entry back to the user so agreement is explicit.
+- Check for an existing entry before defining a concept. Reuse it and never invent a second name for the same concept.
+- Correct collisions on the spot: "That is the Customer per the glossary. I keep using that term."
+- Two concepts never share one word. Split them into two entries and ask the user to confirm the difference. If the same word must serve both concepts, record the decision as an ADR, regardless of the ADR conditions below.
+
+Use one entry per concept, in alphabetical order, with the term, a precise project definition, and the words to avoid. See [references/glossary-format.md](references/glossary-format.md).
+
+Stress-test with concrete scenarios. When discussing domain relationships or boundaries, invent specific scenarios for edge cases. Say, "Scenario: a Customer has two Users. One User is deleted. What happens to the billing history of the Customer? Does it stay, transfer, or become orphaned?" A scenario forces precision about behavior at the boundaries, not only the happy path.
 
 ## ADRs, Offer Sparingly
 
-The agent offers to create an ADR only when all three conditions are true.
+Offer to create an ADR only when all three conditions are true:
 
 - Hard to reverse: the cost to change the decision later is meaningful.
 - Surprising without context: a future reader asks, "Why did they do it this way?"
-- Real trade-off: genuine alternatives existed, and the group chose one for specific reasons.
+- Real trade-off: genuine alternatives existed, and the user chose one for specific reasons.
 
-If any condition is missing, the agent skips the ADR. The agent does not offer one as a courtesy or to show thoroughness.
+If any condition is missing, skip the ADR. Do not offer one as a courtesy or to show thoroughness.
 
-When all three conditions are true, the agent says, "This is an ADR candidate. It is hard to reverse, non-obvious, and the result of a real trade-off. Do you want me to draft one?"
+When all three conditions are true, say, "This is an ADR candidate. It is hard to reverse, non-obvious, and the result of a real trade-off. Do you want me to draft one?"
+
+Write the ADR where the project keeps them. If the location is undocumented, ask before you choose one.
 
 ## Integration
 
-When a design question depends on a concept that the user does not fully understand, the agent hands off to the learn skill. The learn skill explores the concept with the Socratic ladder, and the agent resumes the interview with a sharper decision. If the session produces artifacts, such as ADR drafts, decision logs, or notes, the agent writes them with the chunked method from the file-writing skill. The agent writes each artifact from the beginning and appends the rest in order.
+When a design question depends on a concept the user does not understand, hand off to the `learn` skill and resume with a sharper decision.
